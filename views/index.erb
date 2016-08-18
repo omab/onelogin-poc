@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <title>OneLogin PoC</title>
+  </head>
+  <body>
+    <h1>OneLogin PoC</h1>
+
+    <% if @user %>
+      <p>
+        Logged in as <%= @user[:email] %>.
+        <a href="/logout">Logout</a>
+      </p>
+
+      <% if @session_token %>
+        <form action="https://admin.us.onelogin.com/session_via_api_token" method="post">
+          <input type="text" name="session_token" value="<%= @session_token %>">
+          <input id="auth_token" type="hidden">
+          <button>OneLogin Session</button>
+        </form>
+      <% end %>
+    <% else %>
+      <form action="/login" method="post">
+        <input type="email" name="email" placeholder="E-mail" value="">
+        <input type="password" name="password" placeholder="Password" value="">
+        <button>Login</button>
+      </form>
+    <% end %>
+  </body>
+</html>
